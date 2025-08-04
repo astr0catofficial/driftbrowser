@@ -4,13 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drift Browser</title>
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/fcr41r.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --text-primary: #ffffff;
+            --frosted-glass-bg: rgba(255, 255, 255, 0.08);
+            --frosted-glass-border: rgba(255, 255, 255, 0.1);
+            --icon-gradient-start: #a855f7;
+            --icon-gradient-end: #ec4899;
+            --placeholder-color: #a0a0a0;
+            --homepage-search-bg: rgba(255, 255, 255, 0.08);
+            --homepage-search-border: rgba(255, 255, 255, 0.1);
+            --suggestion-icon-bg: rgba(255, 255, 255, 0.1);
+            --modal-bg: #2a2a2a;
+            --modal-border: rgba(255, 255, 255, 0.15);
+            --setting-section-bg: rgba(255, 255, 255, 0.05);
+            --setting-section-border: rgba(255, 255, 255, 0.08);
+            --setting-item-border: rgba(255, 255, 255, 0.05);
+            --setting-text-color: #ccc;
+            --switch-off-bg: #ff4d4d;
+            --switch-on-bg: #4CAF50;
+            --switch-thumb-color: white;
+            --nav-button-hover-bg: rgba(255, 255, 255, 0.15);
+
+            --tab-bg-inactive: rgba(255, 255, 255, 0.05);
+            --tab-border-inactive: rgba(255, 255, 255, 0.1);
+            --tab-bg-active: rgba(255, 255, 255, 0.15);
+            --tab-border-active: rgba(255, 255, 255, 0.2);
+            --tab-text-color: #ccc;
+            --tab-close-color: #aaa;
+            --tab-close-hover-bg: rgba(255, 255, 255, 0.2);
+            --tab-close-hover-color: white;
+        }
+
+        body.light-mode {
+            --bg-primary: #f0f2f5;
+            --text-primary: #333333;
+            --frosted-glass-bg: rgba(255, 255, 255, 0.6);
+            --frosted-glass-border: rgba(0, 0, 0, 0.1);
+            --icon-gradient-start: #6d28d9;
+            --icon-gradient-end: #8b008b;
+            --placeholder-color: #444444;
+            --homepage-search-bg: rgba(0, 0, 0, 0.05);
+            --homepage-search-border: rgba(0, 0, 0, 0.1);
+            --suggestion-icon-bg: rgba(0, 0, 0, 0.05);
+            --modal-bg: #ffffff;
+            --modal-border: rgba(0, 0, 0, 0.15);
+            --setting-section-bg: rgba(0, 0, 0, 0.03);
+            --setting-section-border: rgba(0, 0, 0, 0.05);
+            --setting-item-border: rgba(0, 0, 0, 0.05);
+            --setting-text-color: #555;
+            --switch-off-bg: #ccc;
+            --switch-on-bg: #4CAF50;
+            --switch-thumb-color: white;
+            --nav-button-hover-bg: rgba(0, 0, 0, 0.1);
+
+            --tab-bg-inactive: rgba(0, 0, 0, 0.05);
+            --tab-border-inactive: rgba(0, 0, 0, 0.1);
+            --tab-bg-active: rgba(0, 0, 0, 0.1);
+            --tab-border-active: rgba(0, 0, 0, 0.2);
+            --tab-text-color: #333;
+            --tab-close-color: #555;
+            --tab-close-hover-bg: rgba(0, 0, 0, 0.15);
+            --tab-close-hover-color: #333;
+        }
+
         body {
             font-family: 'Sansation', sans-serif;
-            background-color: #1a1a1a;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             display: flex;
             flex-direction: column;
             height: 100vh;
@@ -18,17 +84,19 @@
             overflow: hidden;
             margin: 0;
             padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .frosted-glass {
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: var(--frosted-glass-bg);
             backdrop-filter: blur(15px) saturate(180%);
             -webkit-backdrop-filter: blur(15px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--frosted-glass-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .icon-gradient {
-            background: linear-gradient(45deg, #a855f7, #ec4899);
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -37,13 +105,30 @@
         }
 
         .icon-gradient:hover {
-            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 1));
+            filter: drop-shadow(0 0 10px var(--icon-gradient-start));
             transform: scale(1.1);
+        }
+
+        .url-input {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            padding: 0 10px;
+            font-size: 18px;
+            outline: none;
+            display: flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .url-input::placeholder {
+            color: var(--placeholder-color);
+            transition: color 0.3s ease;
         }
 
         .url-input:focus {
             outline: none;
-            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.5);
+            box-shadow: 0 0 0 2px var(--icon-gradient-start);
         }
 
         iframe {
@@ -54,7 +139,7 @@
 
         .drift-icon-fa {
             font-size: 28px;
-            background: linear-gradient(45deg, #a855f7, #ec4899);
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -74,9 +159,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background-color: #1a1a1a;
+            background-color: var(--bg-primary);
             padding: 20px;
             width: 100%;
+            transition: background-color 0.3s ease;
         }
 
         .homepage-logo-container {
@@ -87,7 +173,7 @@
 
         .homepage-logo-icon {
             font-size: 110px;
-            background: linear-gradient(45deg, #a855f7, #ec4899);
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -97,7 +183,7 @@
         .homepage-logo-text {
             font-size: 85px;
             font-weight: bold;
-            background: linear-gradient(45deg, #a855f7, #ec4899);
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
             -webkit-background-clip: text;
             background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -107,57 +193,60 @@
             display: flex;
             align-items: center;
             width: 90%;
-            max-width: 800px; /* Reverted to longer width */
-            /* Removed gap as enter button is gone */
+            max-width: 500px;
         }
 
         .homepage-search-bar {
             flex-grow: 1;
             display: flex;
             align-items: center;
-            background-color: rgba(255, 255, 255, 0.08);
+            background-color: var(--homepage-search-bg);
             backdrop-filter: blur(10px) saturate(180%);
             -webkit-backdrop-filter: blur(10px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--homepage-search-border);
             border-radius: 9999px;
-            height: auto; /* Reverted height to auto */
-            padding: 8px 20px; /* Reverted padding */
+            padding: 8px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .homepage-search-input {
             flex-grow: 1;
             background: transparent;
             border: none;
-            color: white;
+            color: var(--text-primary);
             padding: 0 10px;
-            height: auto; /* Reverted height to auto */
             font-size: 18px;
             outline: none;
-            placeholder-color: #a0a0a0;
             display: flex;
             align-items: center;
         }
 
         .homepage-search-input::placeholder {
-            color: #a0a0a0;
+            color: var(--placeholder-color);
         }
 
         .homepage-search-icon {
-            color: #a0a0a0;
+            color: var(--placeholder-color);
             margin-right: 10px;
         }
 
-        /* Removed .enter-button styles */
-
         .suggestion-icons-container {
-            display: flex;
-            gap: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 5px;
             margin-top: 40px;
-            flex-wrap: wrap;
-            justify-content: center;
             width: 100%;
-            max-width: 900px;
+            max-width: 300px;
+            justify-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .suggestion-icons-container {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+                max-width: 500px;
+                gap: 10px;
+            }
         }
 
         .suggestion-icon-wrapper {
@@ -167,6 +256,8 @@
             cursor: pointer;
             transition: transform 0.2s ease-in-out;
             flex-shrink: 0;
+            width: 100%;
+            max-width: 150px;
         }
 
         .suggestion-icon-wrapper:hover {
@@ -177,7 +268,7 @@
             width: 60px;
             height: 60px;
             border-radius: 25%;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: var(--suggestion-icon-bg);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             display: flex;
@@ -185,6 +276,7 @@
             justify-content: center;
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
         }
 
         .suggestion-icon img {
@@ -196,7 +288,9 @@
         .suggestion-text {
             margin-top: 8px;
             font-size: 14px;
-            color: #ccc;
+            color: var(--setting-text-color);
+            text-align: center;
+            transition: color 0.3s ease;
         }
 
         .modal-overlay {
@@ -215,14 +309,15 @@
         }
 
         .modal-content {
-            background-color: #2a2a2a;
+            background-color: var(--modal-bg);
             border-radius: 15px;
             padding: 20px;
             width: 90%;
             max-width: 400px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid var(--modal-border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .modal-header {
@@ -235,20 +330,21 @@
         .modal-header h2 {
             font-size: 22px;
             font-weight: bold;
-            color: white;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
         }
 
         .modal-close-button {
             background: none;
             border: none;
             font-size: 28px;
-            color: #aaa;
+            color: var(--placeholder-color);
             cursor: pointer;
             transition: color 0.2s;
         }
 
         .modal-close-button:hover {
-            color: white;
+            color: var(--text-primary);
         }
 
         .setting-section {
@@ -264,14 +360,15 @@
             align-items: center;
             font-size: 17px;
             font-weight: bold;
-            color: white;
+            color: var(--text-primary);
             margin-bottom: 12px;
+            transition: color 0.3s ease;
         }
 
         .setting-section-title i {
             margin-right: 8px;
             font-size: 18px;
-            color: #a855f7;
+            color: var(--icon-gradient-start);
         }
 
         .setting-item {
@@ -279,7 +376,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--setting-item-border);
+            transition: border-color 0.3s ease;
         }
 
         .setting-item:last-child {
@@ -287,15 +385,59 @@
         }
 
         .setting-item label {
-            color: #ccc;
+            color: var(--setting-text-color);
             font-size: 15px;
+            transition: color 0.3s ease;
         }
 
-        .setting-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #ec4899;
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
             cursor: pointer;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--switch-off-bg);
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--switch-thumb-color);
+            -webkit-transition: .4s;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--switch-on-bg);
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
         }
 
         .modal-footer {
@@ -304,7 +446,7 @@
         }
 
         .modal-save-button {
-            background: linear-gradient(45deg, #a855f7, #ec4899);
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
             color: white;
             padding: 8px 18px;
             border-radius: 8px;
@@ -345,7 +487,7 @@
 
         .loading-spinner {
             border: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 8px solid #a855f7;
+            border-top: 8px solid var(--icon-gradient-start);
             border-radius: 50%;
             width: 60px;
             height: 60px;
@@ -366,7 +508,7 @@
             justify-content: center;
         }
         .nav-button-hover:hover {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: var(--nav-button-hover-bg);
         }
     </style>
 </head>
@@ -411,7 +553,7 @@
     </nav>
 
     <div id="mainContentArea" class="flex-grow w-full rounded-lg my-2 mx-2 flex flex-col items-center justify-center">
-        <div id="homepage" class="homepage-container hidden">
+        <div id="homepage" class="homepage-container">
             <div class="homepage-logo-container">
                 <i class="fas fa-wind homepage-logo-icon"></i>
                 <span class="homepage-logo-text">Drift</span>
@@ -421,7 +563,6 @@
                     <i class="fas fa-search homepage-search-icon"></i>
                     <input type="text" id="homepageSearchInput" placeholder="Browse the Web Freely." class="homepage-search-input">
                 </div>
-                <!-- Removed the Enter button -->
             </div>
 
             <div class="suggestion-icons-container">
@@ -449,6 +590,30 @@
                     </div>
                     <span class="suggestion-text">GitHub</span>
                 </div>
+                <div class="suggestion-icon-wrapper" data-url="https://play.geforcenow.com">
+                    <div class="suggestion-icon">
+                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/38f15ceeccb1616056b7d037a0d56cb9_low_res_Nvidia%20GeForce%20Now.png" alt="GeForce Now" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=GFN';">
+                    </div>
+                    <span class="suggestion-text">GeForce Now</span>
+                </div>
+                <div class="suggestion-icon-wrapper" data-url="https://www.google.com">
+                    <div class="suggestion-icon">
+                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/0d6d89c746eb9a90c6d16db340e46435_low_res_Google.png" alt="Google" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=GO';">
+                    </div>
+                    <span class="suggestion-text">Google</span>
+                </div>
+                <div class="suggestion-icon-wrapper" data-url="https://discord.com/login">
+                    <div class="suggestion-icon">
+                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/5c3a2d465a4a98b29c370945bbbbb8f5_low_res_Discord.png" alt="Discord" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=DC';">
+                    </div>
+                    <span class="suggestion-text">Discord</span>
+                </div>
+                <div class="suggestion-icon-wrapper" data-url="https://p-stream.net">
+                    <div class="suggestion-icon">
+                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/faaa5b947c6bdf999236b3ee0bafb27e_low_res_P-Stream.png" alt="P-Stream" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=PS';">
+                    </div>
+                    <span class="suggestion-text">P-Stream</span>
+                </div>
             </div>
         </div>
         <iframe id="browserFrame" src="about:blank" class="flex-grow w-full rounded-lg hidden"></iframe>
@@ -474,9 +639,9 @@
                         </label>
                     </div>
                     <div class="setting-item">
-                        <label for="showBookmarksToggle">Show Bookmarks Bar</label>
+                        <label for="enableAnimationsToggle">Enable Animations</label>
                         <label class="switch">
-                            <input type="checkbox" id="showBookmarksToggle">
+                            <input type="checkbox" id="enableAnimationsToggle" checked>
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -502,27 +667,6 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="setting-section">
-                    <div class="setting-section-title">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <span>Extensions</span>
-                    </div>
-                    <div class="setting-item">
-                        <label>Ad Blocker</label>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                    <div class="setting-item">
-                        <label>Password Manager</label>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
-                        </label>
-                    </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button id="saveSettings" class="modal-save-button">Save Settings</button>
@@ -540,13 +684,14 @@
         const browserFrame = document.getElementById('browserFrame');
         const homepage = document.getElementById('homepage');
         const homepageSearchInput = document.getElementById('homepageSearchInput');
-        // Removed homepageEnterButton constant
         const mainContentArea = document.getElementById('mainContentArea');
         const settingsModal = document.getElementById('settingsModal');
         const closeModalButton = document.getElementById('closeModal');
         const saveSettingsButton = document.getElementById('saveSettings');
         const loadingOverlay = document.getElementById('loadingOverlay');
         const suggestionIconsContainer = document.querySelector('.suggestion-icons-container');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const enableAnimationsToggle = document.getElementById('enableAnimationsToggle');
 
         function decodeBase64(encodedString) {
             try {
@@ -739,6 +884,15 @@
             showBrowserFrame();
         }
 
+        function applyTheme(isDarkMode) {
+            if (isDarkMode) {
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
         urlInput.addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 navigateToUrl(urlInput.value);
@@ -753,8 +907,6 @@
                 }
             }
         });
-
-        // Removed homepageEnterButton event listener
 
         backButton.addEventListener('click', function() {
             if (browserFrame.classList.contains('hidden') || browserFrame.contentWindow.history.length <= 1) {
@@ -805,7 +957,28 @@
             }
         });
 
+        darkModeToggle.addEventListener('change', function() {
+            applyTheme(this.checked);
+        });
+
+        enableAnimationsToggle.addEventListener('change', function() {
+            if (this.checked) {
+                console.log("Animations Enabled (placeholder)");
+            } else {
+                console.log("Animations Disabled (placeholder)");
+            }
+        });
+
         window.onload = function() {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode !== null) {
+                const isDarkMode = savedDarkMode === 'true';
+                darkModeToggle.checked = isDarkMode;
+                applyTheme(isDarkMode);
+            } else {
+                darkModeToggle.checked = true;
+                applyTheme(true);
+            }
             showHomepage();
         };
     </script>
