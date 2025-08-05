@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drift - Modern Web Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #0f0f13;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #8a2be2, #ff69b4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .btn-gradient {
+            background: linear-gradient(135deg, #8a2be2, #ff69b4);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(138, 43, 226, 0.3);
+        }
+        
+        .content-box {
+            background: rgba(30, 30, 40, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 800px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .comparison-box {
+            background: rgba(40, 40, 50, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .comparison-box:hover {
+            transform: translateY(-5px);
+            background: rgba(50, 50, 60, 0.7);
+        }
+        
+        .vs-badge {
+            background: linear-gradient(135deg, #8a2be2, #ff69b4);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-box">
+        <div class="flex items-center justify-center mb-6">
+            <i class="fas fa-wind text-8xl gradient-text mr-4"></i>
+            <h1 class="text-6xl font-bold gradient-text">Drift</h1>
+        </div>
+        
+        <h2 class="text-3xl font-semibold mb-6">Modern Web Solutions</h2>
+        
+        <p class="text-xl mb-8 leading-relaxed">
+            We're 2 dedicated developers that are passionate about creating a modern, efficient and user-friendly
+            proxy solution to your <strong>fuckass</strong> school blocking sites. We're not just a proxy, we're a proxy that's
+            built for students.
+        </p>
+    
+        <div class="relative my-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="comparison-box">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Drift Proxy</h3>
+                    <ul class="space-y-3 text-left">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            Singular HTML file
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            New fresh UI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            Multiple public server
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            Almost unblockable HTML
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                            Works on both desktop and mobile
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-box">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-300">Other Proxies</h3>
+                    <ul class="space-y-3 text-left">
+                        <li class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-2"></i>
+                            Multiple files in the GitHub
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-2"></i>
+                            Basic boring UI
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-2"></i>
+                            Singular server
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-2"></i>
+                            Several sites to attempt unblocking.
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-times-circle text-red-400 mr-2"></i>
+                            Only works on desktops.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            
+            <div class="vs-badge">
+                VS
+            </div>
+        </div>
+        
+        <div style="
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    width: 100%;">
+
+    <a href="https://driftapp.pages.dev" style="
+        background: linear-gradient(135deg, #4285F4, #34A853);
+        color: white;
+        border: none;
+        padding: 14px 28px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(66, 133, 244, 0.3);
+        transition: all 0.3s ease;
+    ">
+        <i class="fas fa-rocket" style="margin-right: 10px; font-size: 1.1em;"></i>
+        Drift server route
+    </a>
+
+    <a href="mailto:veteraning@protonmail.com" style="
+        background: linear-gradient(135deg, #EA4335, #FBBC05);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(234, 67, 53, 0.3);
+        transition: all 0.3s ease;
+        text-align: center;
+    ">
+        <div style="display: flex; align-items: center;">
+            <i class="fas fa-envelope" style="margin-right: 8px; font-size: 1.1em;"></i>
+            Contact Us
+        </div>
+        <div style="font-size: 0.75em; margin-top: 4px; font-weight: 400; opacity: 0.9;">
+            drift.prxy@proton.me
+        </div>
+    </a>
+</div>
+
+<style>
+    a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 7px 20px rgba(0,0,0,0.2);
+    }
+</style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </div>
+</body>
+</html>
