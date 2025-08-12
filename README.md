@@ -4,8 +4,6 @@
 
 Drift is a smooth, clean browser that helps you get around restrictions. It’s fast, easy to use, and works right from your device with no extra setup. Just open it and start browsing.
 
-<img src="d8c6ae46-3b56-4295-ac0a-21fae4de0f0e.png" width="600"/>
-
 ---
 
 ### Features
