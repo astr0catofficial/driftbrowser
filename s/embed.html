@@ -1,13 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <h1>hold up im loading</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drift Browser - Loading</title>
+    <link rel="icon" type="image/png" href="https://files.catbox.moe/fcr41r.png">
+    <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --text-primary: #ffffff;
+            --icon-gradient-start: #a855f7;
+            --icon-gradient-end: #ec4899;
+            --frosted-glass-bg: rgba(255, 255, 255, 0.08);
+            --frosted-glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sansation', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px;
+            background-color: var(--frosted-glass-bg);
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid var(--frosted-glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 60px;
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-right: 15px;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.5));
+        }
+
+        .logo-text {
+            font-size: 48px;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .loading-spinner {
+            border: 6px solid rgba(255, 255, 255, 0.1);
+            border-top: 6px solid var(--icon-gradient-start);
+            border-right: 6px solid var(--icon-gradient-end);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .loading-subtitle {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            border-radius: 2px;
+            animation: progress 2s ease-in-out infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            50% { width: 70%; }
+            100% { width: 100%; }
+        }
+
+        .floating-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); }
+            10% { transform: translateY(90vh) scale(1); }
+            90% { transform: translateY(-10vh) scale(1); }
+            100% { transform: translateY(-10vh) scale(0); }
+        }
+    </style>
     <script src="uv/uv.bundle.js" defer></script>
     <script src="uv/uv.config.js" defer></script>
     <script src="register-sw.js" defer></script>
     <script src="embed.js" defer></script>
+</head>
+<body>
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="loading-container">
+        <div class="logo-container">
+            <i class="fas fa-wind logo-icon"></i>
+            <span class="logo-text">Drift</span>
+        </div>
+        
+        <div class="loading-spinner"></div>
+        
+        <h1 class="loading-text">Loading...</h1>
+        <p class="loading-subtitle">Preparing your browsing experience</p>
+        
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
 </body>
-
-
 </html>
