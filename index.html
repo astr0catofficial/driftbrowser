@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,17 +8,613 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Sansation:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/main-page.css">
+    
+    <style>
+        :root {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --text-primary: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent-primary: #a855f7;
+            --accent-secondary: #ec4899;
+            --icon-gradient-start: #a855f7;
+            --icon-gradient-end: #ec4899;
+            /* Added smooth animation variables */
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            --transition-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            font-family: 'Sansation', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            /* Added smooth page transitions */
+            transition: all 0.6s var(--transition-smooth);
+        }
+
+        body.light-mode {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #6b7280;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        body.no-animations * {
+            animation: none !important;
+            transition: none !important;
+        }
+
+        .frosted-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Added smooth backdrop transitions */
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        body.light-mode .frosted-glass {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .icon-gradient {
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            /* Added smooth gradient transitions */
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        .nav-button-hover {
+            /* Enhanced button hover animations */
+            transition: all 0.4s var(--transition-elastic);
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .nav-button-hover:hover {
+            background: rgba(168, 85, 247, 0.2);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+        }
+
+        .nav-button-hover:active {
+            transform: translateY(0) scale(0.98);
+            transition: all 0.1s var(--transition-smooth);
+        }
+
+        .url-input {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Enhanced input transitions */
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        body.light-mode .url-input {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+        }
+
+        .url-input:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 30px rgba(168, 85, 247, 0.2);
+        }
+
+        .homepage-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            text-align: center;
+            padding: 2rem;
+            /* Added smooth container transitions */
+            transition: all 0.6s var(--transition-smooth);
+            opacity: 1;
+        }
+
+        .homepage-container.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .homepage-logo-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            /* Added logo animation */
+            animation: logoFloat 6s ease-in-out infinite;
+        }
+
+        /* Added floating logo animation */
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .homepage-logo-icon {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--icon-gradient-start), var(--icon-gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-right: 1rem;
+            /* Added icon hover animation */
+            transition: all 0.5s var(--transition-bounce);
+        }
+
+        .homepage-logo-icon:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .homepage-logo-text {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            /* Added text hover animation */
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .homepage-search-wrapper {
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            /* Added search wrapper animation */
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .homepage-search-bar {
+            position: relative;
+            width: 100%;
+        }
+
+        .homepage-search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            /* Enhanced search input transitions */
+            transition: all 0.5s var(--transition-smooth);
+        }
+
+        body.light-mode .homepage-search-input {
+            background: rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            color: var(--text-primary);
+        }
+
+        .homepage-search-input:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.4);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .homepage-search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #b3b3b3;
+            font-size: 1.2rem;
+            /* Added search icon animation */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .homepage-search-input:focus + .homepage-search-icon {
+            color: var(--accent-primary);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .suggestion-icons-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .suggestion-icon-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            /* Enhanced suggestion icon animations */
+            transition: all 0.4s var(--transition-elastic);
+        }
+
+        .suggestion-icon-wrapper:hover {
+            transform: translateY(-8px) scale(1.05);
+        }
+
+        .suggestion-icon-wrapper:active {
+            transform: translateY(-4px) scale(0.98);
+            transition: all 0.1s var(--transition-smooth);
+        }
+
+        .suggestion-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            /* Enhanced icon transitions */
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        body.light-mode .suggestion-icon {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .suggestion-icon:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.3);
+            transform: rotate(5deg);
+        }
+
+        .suggestion-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            /* Added image transitions */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .suggestion-icon:hover img {
+            transform: scale(1.1);
+        }
+
+        .suggestion-text {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-align: center;
+            /* Added text transitions */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .suggestion-icon-wrapper:hover .suggestion-text {
+            color: var(--text-primary);
+            transform: scale(1.05);
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            /* Added smooth modal transitions */
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s var(--transition-smooth);
+        }
+
+        .modal-overlay:not(.hidden) {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            /* Enhanced modal content animations */
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.5s var(--transition-bounce);
+        }
+
+        body.light-mode .modal-content {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-overlay:not(.hidden) .modal-content {
+            transform: translateY(0) scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .modal-close-button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 2rem;
+            cursor: pointer;
+            /* Enhanced close button animation */
+            transition: all 0.3s var(--transition-elastic);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close-button:hover {
+            color: var(--accent-primary);
+            background: rgba(168, 85, 247, 0.1);
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .setting-section {
+            margin-bottom: 2rem;
+            /* Added section animations */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .setting-section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .setting-section-title i {
+            margin-right: 0.5rem;
+            color: var(--accent-primary);
+            /* Added icon pulse animation */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .setting-section:hover .setting-section-title i {
+            transform: scale(1.2);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* Added setting item hover */
+            transition: all 0.3s var(--transition-smooth);
+            border-radius: 8px;
+            margin: 0 -0.5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+
+        body.light-mode .setting-item {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .setting-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+
+        body.light-mode .setting-item:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-item label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            /* Added label transitions */
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .setting-item:hover label {
+            color: var(--text-primary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #333;
+            /* Enhanced slider transitions */
+            transition: all 0.5s var(--transition-elastic);
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            /* Enhanced slider knob transitions */
+            transition: all 0.4s var(--transition-bounce);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .slider:hover:before {
+            transform: scale(1.1);
+        }
+
+        input:checked + .slider {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        input:checked + .slider:hover:before {
+            transform: translateX(26px) scale(1.1);
+        }
+
+        .modal-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: right;
+        }
+
+        .modal-save-button {
+            background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            /* Enhanced save button animations */
+            transition: all 0.4s var(--transition-elastic);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .modal-save-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+        }
+
+        .modal-save-button:active {
+            transform: translateY(-1px) scale(1.02);
+            transition: all 0.1s var(--transition-smooth);
+        }
+
+        .setting-description {
+            display: block;
+            color: #888;
+            font-size: 0.8rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Added iframe transition */
+        #browserFrame {
+            transition: all 0.5s var(--transition-smooth);
+            opacity: 1;
+        }
+
+        #browserFrame.hidden {
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        /* Added loading animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Added stagger animation for suggestion icons */
+        .suggestion-icon-wrapper:nth-child(1) { animation-delay: 0.1s; }
+        .suggestion-icon-wrapper:nth-child(2) { animation-delay: 0.2s; }
+        .suggestion-icon-wrapper:nth-child(3) { animation-delay: 0.3s; }
+        .suggestion-icon-wrapper:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .suggestion-icon-wrapper {
+            animation: slideInUp 0.6s var(--transition-smooth) both;
+        }
+
+        @media (max-width: 768px) {
+            .homepage-logo-icon,
+            .homepage-logo-text {
+                font-size: 3rem;
+            }
+
+            .suggestion-icons-container {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 1rem;
+            }
+
+            .suggestion-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .suggestion-icon img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-900 text-white">
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-spinner"></div>
-    </div>
-
     <nav class="frosted-glass py-1 px-4 flex items-center justify-between shadow-lg rounded-b-lg mx-2 mt-2">
         <div class="flex items-center space-x-4">
             <div class="flex items-center space-x-2">
-                <i class="fas fa-wind drift-icon-fa"></i>
+                <i class="fas fa-wind icon-gradient"></i>
                 <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-500 text-transparent bg-clip-text">Drift</span>
             </div>
 
@@ -45,7 +640,7 @@
                 <i class="fas fa-home text-2xl icon-gradient"></i>
             </button>
             <button id="devToolsButton" class="nav-button-hover transition-colors">
-                <i class="fas fa-code text-2xl icon-gradient"></i>
+                <i class="fas fa-cog text-2xl icon-gradient"></i>
             </button>
         </div>
     </nav>
@@ -76,41 +671,17 @@
                     </div>
                     <span class="suggestion-text">Reddit</span>
                 </div>
-                <div class="suggestion-icon-wrapper" data-url="https://www.wikipedia.org">
-                    <div class="suggestion-icon">
-                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/87f9462b63d6779ccfe43d4265a348ab_P5B0cTGEUw.png" alt="Wikipedia" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=WK';">
-                    </div>
-                    <span class="suggestion-text">Wikipedia</span>
-                </div>
                 <div class="suggestion-icon-wrapper" data-url="https://www.github.com">
                     <div class="suggestion-icon">
                         <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/fd68d30a4bda6e77fa38d34089280f76_UW2atu0EPX.png" alt="GitHub" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=GH';">
                     </div>
                     <span class="suggestion-text">GitHub</span>
                 </div>
-                <div class="suggestion-icon-wrapper" data-url="https://play.geforcenow.com">
-                    <div class="suggestion-icon">
-                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/38f15ceeccb1616056b7d037a0d56cb9_low_res_Nvidia%20GeForce%20Now.png" alt="GeForce Now" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=GFN';">
-                    </div>
-                    <span class="suggestion-text">GeForce Now</span>
-                </div>
                 <div class="suggestion-icon-wrapper" data-url="https://www.google.com">
                     <div class="suggestion-icon">
                         <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/0d6d89c746eb9a90c6d16db340e46435_low_res_Google.png" alt="Google" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=GO';">
                     </div>
                     <span class="suggestion-text">Google</span>
-                </div>
-                <div class="suggestion-icon-wrapper" data-url="https://discord.com/login">
-                    <div class="suggestion-icon">
-                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/5c3a2d465a4a98b29c370945bbbbb8f5_low_res_Discord.png" alt="Discord" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=DC';">
-                    </div>
-                    <span class="suggestion-text">Discord</span>
-                </div>
-                <div class="suggestion-icon-wrapper" data-url="https://p-stream.net">
-                    <div class="suggestion-icon">
-                        <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/faaa5b947c6bdf999236b3ee0bafb27e_low_res_P-Stream.png" alt="P-Stream" onerror="this.onerror=null;this.src='https://placehold.co/60x60/333333/FFFFFF?text=PS';">
-                    </div>
-                    <span class="suggestion-text">P-Stream</span>
                 </div>
             </div>
         </div>
@@ -172,10 +743,219 @@
         </div>
     </div>
 
-    <script src="/main-page.js"></script>
+    <script>
+        let navigationHistory = [];
+        let currentHistoryIndex = -1;
+
+        function loadSettings() {
+            const darkMode = localStorage.getItem('darkMode') !== 'false';
+            const animations = localStorage.getItem('animations') !== 'false';
+            const blockTrackers = localStorage.getItem('blockTrackers') !== 'false';
+            const httpsOnly = localStorage.getItem('httpsOnly') === 'true';
+
+            document.getElementById('darkModeToggle').checked = darkMode;
+            document.getElementById('enableAnimationsToggle').checked = animations;
+            document.getElementById('blockTrackersToggle').checked = blockTrackers;
+            document.getElementById('enableHttpsOnlyToggle').checked = httpsOnly;
+
+            applySettings();
+        }
+
+        function applySettings() {
+            const darkMode = document.getElementById('darkModeToggle').checked;
+            const animations = document.getElementById('enableAnimationsToggle').checked;
+
+            // Apply dark/light mode
+            if (darkMode) {
+                document.body.classList.remove('light-mode');
+            } else {
+                document.body.classList.add('light-mode');
+            }
+
+            // Apply animations setting
+            if (animations) {
+                document.body.classList.remove('no-animations');
+            } else {
+                document.body.classList.add('no-animations');
+            }
+        }
+
+        function saveSettings() {
+            const darkMode = document.getElementById('darkModeToggle').checked;
+            const animations = document.getElementById('enableAnimationsToggle').checked;
+            const blockTrackers = document.getElementById('blockTrackersToggle').checked;
+            const httpsOnly = document.getElementById('enableHttpsOnlyToggle').checked;
+
+            localStorage.setItem('darkMode', darkMode);
+            localStorage.setItem('animations', animations);
+            localStorage.setItem('blockTrackers', blockTrackers);
+            localStorage.setItem('httpsOnly', httpsOnly);
+
+            applySettings();
+            hideModal();
+        }
+
+        function processUrl(input) {
+            if (!input.trim()) return '';
+            
+            // Check HTTPS-only setting
+            const httpsOnly = document.getElementById('enableHttpsOnlyToggle').checked;
+            
+            // If it looks like a search query, use Google
+            if (!input.includes('.') && !input.includes('://')) {
+                return `https://www.google.com/search?q=${encodeURIComponent(input)}`;
+            }
+            
+            // Add protocol if missing
+            if (!input.startsWith('http://') && !input.startsWith('https://')) {
+                input = httpsOnly ? 'https://' + input : 'https://' + input;
+            }
+            
+            // Force HTTPS if enabled
+            if (httpsOnly && input.startsWith('http://')) {
+                input = input.replace('http://', 'https://');
+            }
+            
+            return input;
+        }
+
+        function loadUrl(url) {
+            if (!url) return;
+            
+            const processedUrl = processUrl(url);
+            const embedUrl = `/s/embed.html#${processedUrl}`;
+            
+            const iframe = document.getElementById('browserFrame');
+            const homepage = document.getElementById('homepage');
+            const urlInput = document.getElementById('urlInput');
+            
+            homepage.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            iframe.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            homepage.classList.add('hidden');
+            
+            setTimeout(() => {
+                iframe.src = embedUrl;
+                iframe.classList.remove('hidden');
+                urlInput.value = processedUrl;
+            }, 250);
+            
+            // Add to history
+            if (currentHistoryIndex === -1 || navigationHistory[currentHistoryIndex] !== processedUrl) {
+                navigationHistory = navigationHistory.slice(0, currentHistoryIndex + 1);
+                navigationHistory.push(processedUrl);
+                currentHistoryIndex = navigationHistory.length - 1;
+            }
+            
+            updateNavigationButtons();
+        }
+
+        function showHomepage() {
+            const iframe = document.getElementById('browserFrame');
+            const homepage = document.getElementById('homepage');
+            const urlInput = document.getElementById('urlInput');
+            
+            iframe.classList.add('hidden');
+            
+            setTimeout(() => {
+                homepage.classList.remove('hidden');
+                urlInput.value = '';
+            }, 250);
+        }
+
+        function updateNavigationButtons() {
+            const backButton = document.getElementById('backButton');
+            const forwardButton = document.getElementById('forwardButton');
+            
+            backButton.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            forwardButton.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+            
+            backButton.style.opacity = currentHistoryIndex > 0 ? '1' : '0.5';
+            forwardButton.style.opacity = currentHistoryIndex < navigationHistory.length - 1 ? '1' : '0.5';
+        }
+
+        function showModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.remove('hidden');
+        }
+
+        function hideModal() {
+            const modal = document.getElementById('settingsModal');
+            modal.classList.add('hidden');
+        }
+
+        // Event listeners
+        document.getElementById('urlInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadUrl(this.value);
+            }
+        });
+
+        document.getElementById('homepageSearchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadUrl(this.value);
+            }
+        });
+
+        document.getElementById('backButton').addEventListener('click', function() {
+            if (currentHistoryIndex > 0) {
+                currentHistoryIndex--;
+                const url = navigationHistory[currentHistoryIndex];
+                const iframe = document.getElementById('browserFrame');
+                iframe.src = `/s/embed.html#${url}`;
+                document.getElementById('urlInput').value = url;
+                updateNavigationButtons();
+            }
+        });
+
+        document.getElementById('forwardButton').addEventListener('click', function() {
+            if (currentHistoryIndex < navigationHistory.length - 1) {
+                currentHistoryIndex++;
+                const url = navigationHistory[currentHistoryIndex];
+                const iframe = document.getElementById('browserFrame');
+                iframe.src = `/s/embed.html#${url}`;
+                document.getElementById('urlInput').value = url;
+                updateNavigationButtons();
+            }
+        });
+
+        document.getElementById('refreshButton').addEventListener('click', function() {
+            const iframe = document.getElementById('browserFrame');
+            if (!iframe.classList.contains('hidden')) {
+                iframe.src = iframe.src;
+            }
+        });
+
+        document.getElementById('homeButton').addEventListener('click', showHomepage);
+
+        document.getElementById('devToolsButton').addEventListener('click', showModal);
+
+        document.getElementById('closeModal').addEventListener('click', hideModal);
+
+        document.getElementById('saveSettings').addEventListener('click', saveSettings);
+
+        document.getElementById('darkModeToggle').addEventListener('change', applySettings);
+        document.getElementById('enableAnimationsToggle').addEventListener('change', applySettings);
+
+        // Suggestion icons
+        document.querySelectorAll('.suggestion-icon-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('click', function() {
+                const url = this.getAttribute('data-url');
+                loadUrl(url);
+            });
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('settingsModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideModal();
+            }
+        });
+
+        // Initialize
+        loadSettings();
+        updateNavigationButtons();
+    </script>
+
 </body>
 </html>
-
-<script defer data-domain="html.cafe" src="https://milkymouse.com/js/script.js"></script>
-
-   
