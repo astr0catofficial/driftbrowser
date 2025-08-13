@@ -26,9 +26,10 @@ Drift is made for personal use. Don’t use it to break rules or policies — us
 
 - 👑 Owner: Veteraning  
 - 🔮 Co-Owner: astr0cat
+- 🙀 JR DEV: ZXS
 
 ---
 
 ### Credits
 
-Inspired by open-source projects like Ultraviolet.
+Uses Ultraviolet for proxying!
