@@ -34,7 +34,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            /* Added smooth page transitions */
             transition: all 0.6s var(--transition-smooth);
         }
 
@@ -55,7 +54,6 @@
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            /* Added smooth backdrop transitions */
             transition: all 0.4s var(--transition-smooth);
         }
 
@@ -69,12 +67,10 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* Added smooth gradient transitions */
             transition: all 0.5s var(--transition-smooth);
         }
 
         .nav-button-hover {
-            /* Enhanced button hover animations */
             transition: all 0.4s var(--transition-elastic);
             border-radius: 8px;
             padding: 8px;
@@ -94,7 +90,6 @@
         .url-input {
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            /* Enhanced input transitions */
             transition: all 0.4s var(--transition-smooth);
         }
 
@@ -117,7 +112,6 @@
             min-height: 60vh;
             text-align: center;
             padding: 2rem;
-            /* Added smooth container transitions */
             transition: all 0.6s var(--transition-smooth);
             opacity: 1;
         }
@@ -131,11 +125,9 @@
             display: flex;
             align-items: center;
             margin-bottom: 2rem;
-            /* Added logo animation */
             animation: logoFloat 6s ease-in-out infinite;
         }
 
-        /* Added floating logo animation */
         @keyframes logoFloat {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -148,7 +140,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-right: 1rem;
-            /* Added icon hover animation */
             transition: all 0.5s var(--transition-bounce);
         }
 
@@ -163,7 +154,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            /* Added text hover animation */
             transition: all 0.4s var(--transition-smooth);
         }
 
@@ -171,7 +161,6 @@
             width: 100%;
             max-width: 600px;
             margin-bottom: 3rem;
-            /* Added search wrapper animation */
             transition: all 0.4s var(--transition-smooth);
         }
 
@@ -189,7 +178,6 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.2);
             color: white;
-            /* Enhanced search input transitions */
             transition: all 0.5s var(--transition-smooth);
         }
 
@@ -213,7 +201,6 @@
             transform: translateY(-50%);
             color: #b3b3b3;
             font-size: 1.2rem;
-            /* Added search icon animation */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -235,7 +222,6 @@
             flex-direction: column;
             align-items: center;
             cursor: pointer;
-            /* Enhanced suggestion icon animations */
             transition: all 0.4s var(--transition-elastic);
         }
 
@@ -259,7 +245,6 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 0.5rem;
-            /* Enhanced icon transitions */
             transition: all 0.4s var(--transition-smooth);
         }
 
@@ -279,7 +264,6 @@
             width: 40px;
             height: 40px;
             border-radius: 8px;
-            /* Added image transitions */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -291,7 +275,6 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             text-align: center;
-            /* Added text transitions */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -312,7 +295,6 @@
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            /* Added smooth modal transitions */
             opacity: 0;
             visibility: hidden;
             transition: all 0.4s var(--transition-smooth);
@@ -331,7 +313,6 @@
             max-height: 80vh;
             overflow-y: auto;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            /* Enhanced modal content animations */
             transform: translateY(50px) scale(0.9);
             transition: all 0.5s var(--transition-bounce);
         }
@@ -365,7 +346,6 @@
             color: var(--text-secondary);
             font-size: 2rem;
             cursor: pointer;
-            /* Enhanced close button animation */
             transition: all 0.3s var(--transition-elastic);
             border-radius: 50%;
             width: 40px;
@@ -387,7 +367,6 @@
 
         .setting-section {
             margin-bottom: 2rem;
-            /* Added section animations */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -402,7 +381,6 @@
         .setting-section-title i {
             margin-right: 0.5rem;
             color: var(--accent-primary);
-            /* Added icon pulse animation */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -416,7 +394,6 @@
             align-items: center;
             padding: 0.75rem 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            /* Added setting item hover */
             transition: all 0.3s var(--transition-smooth);
             border-radius: 8px;
             margin: 0 -0.5rem;
@@ -444,7 +421,6 @@
         .setting-item label {
             color: var(--text-secondary);
             font-size: 0.95rem;
-            /* Added label transitions */
             transition: all 0.3s var(--transition-smooth);
         }
 
@@ -473,7 +449,6 @@
             right: 0;
             bottom: 0;
             background-color: #333;
-            /* Enhanced slider transitions */
             transition: all 0.5s var(--transition-elastic);
             border-radius: 24px;
         }
@@ -486,7 +461,6 @@
             left: 3px;
             bottom: 3px;
             background-color: white;
-            /* Enhanced slider knob transitions */
             transition: all 0.4s var(--transition-bounce);
             border-radius: 50%;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -523,7 +497,6 @@
             border-radius: 25px;
             font-weight: 600;
             cursor: pointer;
-            /* Enhanced save button animations */
             transition: all 0.4s var(--transition-elastic);
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
         }
@@ -545,7 +518,6 @@
             margin-top: 0.25rem;
         }
 
-        /* Added iframe transition */
         #browserFrame {
             transition: all 0.5s var(--transition-smooth);
             opacity: 1;
@@ -556,7 +528,6 @@
             transform: scale(0.95);
         }
 
-        /* Added loading animation */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -566,7 +537,6 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        /* Added stagger animation for suggestion icons */
         .suggestion-icon-wrapper:nth-child(1) { animation-delay: 0.1s; }
         .suggestion-icon-wrapper:nth-child(2) { animation-delay: 0.2s; }
         .suggestion-icon-wrapper:nth-child(3) { animation-delay: 0.3s; }
@@ -765,14 +735,12 @@
             const darkMode = document.getElementById('darkModeToggle').checked;
             const animations = document.getElementById('enableAnimationsToggle').checked;
 
-            // Apply dark/light mode
             if (darkMode) {
                 document.body.classList.remove('light-mode');
             } else {
                 document.body.classList.add('light-mode');
             }
 
-            // Apply animations setting
             if (animations) {
                 document.body.classList.remove('no-animations');
             } else {
@@ -798,20 +766,16 @@
         function processUrl(input) {
             if (!input.trim()) return '';
             
-            // Check HTTPS-only setting
             const httpsOnly = document.getElementById('enableHttpsOnlyToggle').checked;
             
-            // If it looks like a search query, use Google
             if (!input.includes('.') && !input.includes('://')) {
                 return `https://www.google.com/search?q=${encodeURIComponent(input)}`;
             }
             
-            // Add protocol if missing
             if (!input.startsWith('http://') && !input.startsWith('https://')) {
                 input = httpsOnly ? 'https://' + input : 'https://' + input;
             }
             
-            // Force HTTPS if enabled
             if (httpsOnly && input.startsWith('http://')) {
                 input = input.replace('http://', 'https://');
             }
@@ -840,7 +804,6 @@
                 urlInput.value = processedUrl;
             }, 250);
             
-            // Add to history
             if (currentHistoryIndex === -1 || navigationHistory[currentHistoryIndex] !== processedUrl) {
                 navigationHistory = navigationHistory.slice(0, currentHistoryIndex + 1);
                 navigationHistory.push(processedUrl);
@@ -884,7 +847,6 @@
             modal.classList.add('hidden');
         }
 
-        // Event listeners
         document.getElementById('urlInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 loadUrl(this.value);
@@ -937,7 +899,6 @@
         document.getElementById('darkModeToggle').addEventListener('change', applySettings);
         document.getElementById('enableAnimationsToggle').addEventListener('change', applySettings);
 
-        // Suggestion icons
         document.querySelectorAll('.suggestion-icon-wrapper').forEach(wrapper => {
             wrapper.addEventListener('click', function() {
                 const url = this.getAttribute('data-url');
@@ -945,14 +906,12 @@
             });
         });
 
-        // Close modal when clicking outside
         document.getElementById('settingsModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 hideModal();
             }
         });
 
-        // Initialize
         loadSettings();
         updateNavigationButtons();
     </script>
