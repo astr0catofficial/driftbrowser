@@ -769,7 +769,7 @@
             const httpsOnly = document.getElementById('enableHttpsOnlyToggle').checked;
             
             if (!input.includes('.') && !input.includes('://')) {
-                return `https://www.startpage.com/do/search?query=${encodeURIComponent(input)}`;
+                return `https://www.qwant.com/?q=${encodeURIComponent(input)}`;
             }
             
             if (!input.startsWith('http://') && !input.startsWith('https://')) {
