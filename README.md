@@ -25,8 +25,8 @@ Drift is made for personal use. Don’t use it to break rules or policies — us
 ### Team
 
 - 👑 Owner: Veteraning  
-- 🔮 Co-Owner: astr0cat
-- 🙀 JR DEV: ZXS
+- 🔮 Co-Owner: ZXS
+- Dev: Astr0cat
 
 ---
 
