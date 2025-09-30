@@ -3,76 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Scramjet Search</title>
+  <title>Scramjet Searcher</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #0a0a0a;
-      color: #a8ffbf;
-      font-family: 'Inter', sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
-    input {
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-      font-size: 1rem;
-      flex: 0 0 auto;
-      width: 100%;
-      box-sizing: border-box;
-      background: #111;
-      color: #a8ffbf;
-    }
-    iframe {
-      flex: 1 1 auto;
-      border: none;
-      width: 100%;
-    }
+    html, body { margin:0; padding:0; height:100%; width:100%; display:flex; flex-direction:column; background:#0a0a0a; color:#a8ffbf; font-family:Inter, sans-serif; }
+    input { padding:0.8rem 1rem; font-size:1rem; border-radius:8px; border:none; outline:none; width:100%; box-sizing:border-box; background:#111; color:#a8ffbf; }
+    iframe { flex:1; border:none; width:100%; }
   </style>
 </head>
 <body>
   <input id="search-bar" placeholder="Enter search query" />
   <iframe id="search-frame"></iframe>
 
+  <script src="/scram/scramjet.all.js"></script>
   <script>
+    const { ScramjetController } = $scramjetLoadController();
+    const scramjet = new ScramjetController({
+      files: {
+        wasm: "/scram/scramjet.wasm.wasm",
+        all: "/scram/scramjet.all.js",
+        sync: "/scram/scramjet.sync.js",
+      },
+    });
+    scramjet.init();
+
     const iframe = document.getElementById("search-frame");
     const input = document.getElementById("search-bar");
 
     function doSearch(query) {
-      if (!query) return;
-      const url = "https://duckduckgo.com/?q=" + encodeURIComponent(query);
+      if(!query) return;
+      const url = scramjet.encodeUrl("https://duckduckgo.com/?q=" + encodeURIComponent(query));
       iframe.src = url;
       input.value = query;
     }
 
-    // Run on page load if hash exists
-    function handleHashSearch() {
+    function handleHash() {
       const hash = window.location.hash;
-      if (hash && hash.startsWith("#")) {
-        const query = decodeURIComponent(hash.slice(1));
-        doSearch(query);
-      }
+      if(hash && hash.startsWith("#")) doSearch(decodeURIComponent(hash.slice(1)));
     }
 
-    // Update iframe when Enter is pressed
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
+    input.addEventListener("keydown", e => {
+      if(e.key === "Enter") {
         const query = input.value.trim();
-        if (!query) return;
-        window.location.hash = query; // update URL hash
+        if(!query) return;
+        window.location.hash = query;
         doSearch(query);
       }
     });
 
-    // Update iframe if hash changes manually
-    window.addEventListener("hashchange", handleHashSearch);
-
-    handleHashSearch();
+    window.addEventListener("hashchange", handleHash);
+    handleHash();
   </script>
 </body>
 </html>
