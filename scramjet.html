@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scramjet Browser</title>
+  <link rel="stylesheet" href="/styles/defaults.css">
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <script src="/scram/scramjet.all.js"></script>
+  <script src="/baremux/index.js"></script>
+  <style>
+    body, html { margin:0; padding:0; width:100vw; height:100vh; font-family:Inter,sans-serif; background:#0a0a0a; color:#a8ffbf; }
+    .browser-container { display:flex; flex-direction:column; height:100%; padding:0.5em; box-sizing:border-box; }
+    .tabs { display:flex; overflow-x:auto; gap:0.3rem; }
+    .tab { background:#1a1a1a; border-radius:8px; padding:0.5rem 1rem; cursor:pointer; white-space:nowrap; display:flex; align-items:center; gap:0.5rem; }
+    .tab.active { background:#2a2a2a; }
+    .tab-title { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; }
+    .tab-close { background:none; border:none; color:#888; cursor:pointer; font-size:1.2rem; }
+    .nav { display:flex; gap:0.5rem; padding:0.6rem 0; align-items:center; }
+    .bar { flex:1; padding:0.6rem 1rem; border-radius:8px; border:none; outline:none; background:#111; color:#a8ffbf; font-size:1.1rem; }
+    .iframe-container { flex:1; position:relative; }
+    .iframe-container iframe { position:absolute; width:100%; height:100%; border:none; border-radius:12px; }
+    .iframe-container iframe.hidden { display:none; }
+  </style>
+</head>
+<body>
+<div class="browser-container">
+  <div class="tabs" id="tabs-container"></div>
+  <div class="nav">
+    <button onclick="getActiveTab()?.frame.back()">⯇</button>
+    <button onclick="getActiveTab()?.frame.forward()">⯈</button>
+    <button onclick="getActiveTab()?.frame.reload()">⟳</button>
+    <input class="bar" id="address-bar" placeholder="Enter URL or search" onkeyup="event.key==='Enter' && handleSubmit()">
+    <button onclick="openInScramjet()">↗</button>
+  </div>
+  <div class="iframe-container" id="iframe-container"></div>
+</div>
+
+<script>
+  const { ScramjetController } = $scramjetLoadController();
+  const scramjet = new ScramjetController({
+    files: {
+      wasm: "/scram/scramjet.wasm.wasm",
+      all: "/scram/scramjet.all.js",
+      sync: "/scram/scramjet.sync.js",
+    },
+  });
+  scramjet.init();
+
+  navigator.serviceWorker.register("./sw.js");
+
+  let tabs = [], activeTabId=1, nextTabId=2, sortableInstance=null;
+
+  function getFaviconUrl(url){ try{ const d=new URL(url).origin; return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(d)}` }catch{return `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(url)}`}}
+
+  function createTab(url="https://start.duckduckgo.com/"){
+    const frame=scramjet.createFrame();
+    const tab={ id:nextTabId++, title:"New Tab", url, frame, favicon:getFaviconUrl(url) };
+    frame.frame.src=url;
+    frame.addEventListener("urlchange", e=>{
+      if(!e.url) return;
+      tab.url=e.url;
+      tab.favicon=getFaviconUrl(e.url);
+      try{tab.title=frame.frame.contentWindow?.document?.title||new URL(e.url).hostname}catch{tab.title=new URL(e.url).hostname||"..."}
+      updateTabsUI();
+      updateAddressBar();
+    });
+    tabs.push(tab);
+    return tab;
+  }
+
+  function getActiveTab(){ return tabs.find(t=>t.id===activeTabId); }
+  function switchTab(tabId){ tabs.forEach(t=>t.frame.frame.classList.add("hidden")); activeTabId=tabId; const active=getActiveTab(); if(active) active.frame.frame.classList.remove("hidden"); updateTabsUI(); updateAddressBar(); }
+  function closeTab(tabId){ const i=tabs.findIndex(t=>t.id===tabId); if(i===-1)return; const t=tabs[i]; if(t.frame.frame.parentNode) t.frame.frame.parentNode.removeChild(t.frame.frame); tabs.splice(i,1); if(activeTabId===tabId && tabs.length>0){ activeTabId=tabs[Math.min(i,tabs.length-1)].id; switchTab(activeTabId)}else updateTabsUI(); }
+
+  function updateTabsUI(){
+    const container=document.getElementById("tabs-container"); if(!container)return;
+    container.innerHTML="";
+    tabs.forEach(tab=>{
+      const div=document.createElement("div");
+      div.className=`tab ${tab.id===activeTabId?"active":""}`;
+      div.setAttribute("data-tab-id",tab.id);
+      div.onclick=()=>switchTab(tab.id);
+      const fav=document.createElement("img"); fav.className="tab-favicon"; fav.src=tab.favicon; fav.alt=""; fav.onerror=()=>{fav.style.display="none";}
+      const title=document.createElement("span"); title.className="tab-title"; title.textContent=tab.title;
+      const close=document.createElement("button"); close.className="tab-close"; close.textContent="×"; close.onclick=e=>{e.stopPropagation(); closeTab(tab.id);}
+      div.append(fav,title,close);
+      container.appendChild(div);
+    });
+    const newBtn=document.createElement("button"); newBtn.className="new-tab"; newBtn.textContent="+"; newBtn.onclick=()=>{
+      const t=createTab(); document.getElementById("iframe-container").appendChild(t.frame.frame); switchTab(t.id);
+    }
+    container.appendChild(newBtn);
+    if(sortableInstance) sortableInstance.destroy();
+    sortableInstance=new Sortable(container,{animation:200,direction:"horizontal",ghostClass:"sortable-ghost",dragClass:"sortable-drag",filter:".new-tab",onStart:()=>container.querySelectorAll(".tab:not(.sortable-ghost)").forEach(t=>t.style.opacity="0.5"),onEnd:evt=>{container.querySelectorAll(".tab").forEach(t=>t.style.opacity="1"); if(evt.oldIndex!==evt.newIndex){ const moved=tabs.splice(evt.oldIndex,1)[0]; tabs.splice(evt.newIndex,0,moved);} }});
+  }
+
+  function updateAddressBar(){ const bar=document.getElementById("address-bar"); const active=getActiveTab(); if(bar && active) bar.value=active.url; }
+
+  function handleSubmit(){
+    const active=getActiveTab(); const bar=document.getElementById("address-bar"); if(!active||!bar) return;
+    let url=bar.value.trim();
+    if(!url.startsWith("http") && !url.includes(".")) url="https://duckduckgo.com/?q="+encodeURIComponent(url);
+    else if(!url.startsWith("http")) url="https://"+url;
+    active.url=url; active.favicon=getFaviconUrl(url);
+    return active.frame.go(url);
+  }
+
+  function openInScramjet(){
+    const active=getActiveTab(); if(!active) return;
+    const enc=scramjet.encodeUrl(active.url);
+    window.location.href="/scramjet/"+enc;
+  }
+
+  // Hash-based search handling
+  function handleHashSearch(){
+    const h=window.location.hash;
+    if(!h) return;
+    const query=decodeURIComponent(h.slice(1));
+    if(!query) return;
+    const active=getActiveTab();
+    if(!active) return;
+    const searchUrl="https://duckduckgo.com/?q="+encodeURIComponent(query);
+    active.url=searchUrl;
+    active.favicon=getFaviconUrl(searchUrl);
+    active.frame.go(searchUrl);
+    updateTabsUI();
+    updateAddressBar();
+  }
+
+  window.addEventListener("load",()=>{
+    const container=document.getElementById("iframe-container");
+    const initial=createTab();
+    container.appendChild(initial.frame.frame);
+    switchTab(initial.id);
+    updateTabsUI();
+    handleHashSearch(); // check hash on load
+  });
+
+  window.addEventListener("hashchange", handleHashSearch);
+
+  // Check if /scramjet/<encoded-url> is in path
+  window.addEventListener("load",()=>{
+    const path=location.pathname;
+    if(path.startsWith("/scramjet/")){
+      const enc=path.replace("/scramjet/","");
+      const url=decodeURIComponent(enc);
+      const active=getActiveTab();
+      if(active){
+        active.url=url;
+        active.favicon=getFaviconUrl(url);
+        active.frame.go(url);
+        updateTabsUI();
+        updateAddressBar();
+      }
+    }
+  });
+</script>
+</body>
+</html>
